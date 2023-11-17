@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Titan Booting</title>
+    <meta name="description" content="car immobilization"/>
+    <meta name="author" content="Porter Cook" />
+    <link rel="stylesheet" href="styles/boot-history.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header-grid">
+            <div class="logo-container">
+                <h1>Titan Booting</h1>
+            </div>
+            <nav class="top-right">
+                <a href="index.html" class="contact">New Boot</a>
+                <a href="boot-history.html" class="contact">Boot History</a>
+                <a href="search.html" class="contact">Search</a>
+            </nav>
+        </header>
+        <main class="main-content">
+            <div class="display-form-history">
+                <h2>Boot History:</h2>
+                <ul id="history-list"></ul>
+            </div>
+            <hr>
+        </main>
+        <footer>
+            <div class="footer-content">
+                <p>©2023 | Titan Booting | Porter Cook</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Function to display stored form history
+        function displayFormHistory() {
+            const historyList = document.getElementById('history-list');
+
+            // Iterate through local storage items
+            for (let key in localStorage) {
+                if (key.startsWith('bootFormData-')) {
+                    const storedData = JSON.parse(localStorage.getItem(key));
+
+                    // Create list item for each form submission
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `
+                        <strong>${key}</strong><br>
+                        License Plate: ${storedData.licensePlate}<br>
+                        Make: ${storedData.make}<br>
+                        Model: ${storedData.model}<br>
+                        Reason: ${storedData.reason}<br>
+                        Notes: ${storedData.notes}<br>
+                        <button onclick="deleteEntry('${key}')">Delete</button><br><br>
+                    `;
+                    historyList.appendChild(listItem);
+                }
+            }
+        }
+
+        // Function to delete entry from Local Storage
+        function deleteEntry(key) {
+            if (confirm('Are you sure you want to delete this entry?')) {
+                localStorage.removeItem(key);
+                // Refresh the page to reflect changes
+                location.reload();
+            }
+        }
+
+        // Call the function to display stored form history when the page loads
+        window.addEventListener('DOMContentLoaded', displayFormHistory);
+    </script>
+</body>
+</html>

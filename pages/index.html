@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Titan Booting</title>
+    <meta name="description" content="car immobilization"/>
+    <meta name="author" content="Porter Cook" />
+    <link rel="stylesheet" href="styles/index.css">
+</head>  
+<body>
+    <div class="container">
+        <header class="header-grid">
+            <div class="logo-container">
+                <h1>Titan Booting</h1>
+            </div>
+            <nav class="top-right">
+                <a href="index.html" class="contact">New Boot</a>
+                <a href="boot-history.html" class="contact">Boot History</a>
+                <a href="search.html" class="contact">Search</a>
+            </nav>
+        </header>  
+        <main class="main-content">
+            <div class="grid-container">
+                <div class="form-container">
+                    <form id="bootForm">
+                        <div class="gray-box">
+                            <div class="info-container">
+                                <h2>New Boot</h2>
+                                <div class="input-field">
+                                    <label for="license-plate">License Plate</label>
+                                    <input type="text" name="license-plate" id="license-plate" required>
+                                </div>
+                                <div class="input-field">
+                                    <label for="make">Make: </label>
+                                    <input type="text" name="make" id="make" required>
+                                </div>
+                                <div class="input-field">
+                                    <label for="model">Model: </label>
+                                    <input type="text" name="model" id="model" required>
+                                </div>
+                                <div>
+                                    <h4>Reason</h4>
+                                </div>
+                                <div class="input-field" id="drop-down">
+                                    <select name="reason" id="reason" required>
+                                        <option value="" selected disabled>Select Reason</option>
+                                        <option value="no-permit">No Permit</option>
+                                        <option value="time-limit">Visitor Over Time Limit</option>
+                                        <option value="handi">No/Expired Handicap Pass</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <h4>Notes</h4>
+                                <textarea name="notes" rows="8" cols="80" placeholder="Important notes" required></textarea>
+                                <div class="input-field">
+                                    <label for="image-upload">Upload Images</label>
+                                    <input type="file" name="image-upload" id="image-upload" accept="image/*">
+                                </div>
+                                <div class="button">
+                                    <button type="submit">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>    
+            </div>        
+        </main>                        
+        <footer>
+            <div class="footer-content">
+                <p>©2023 | Titan Booting | Porter Cook</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Function to handle form submission
+        function handleFormSubmission(event) {
+            event.preventDefault(); // Prevent the default form submission
+            
+            // Get form data
+            const formData = {
+                licensePlate: document.getElementById('license-plate').value,
+                make: document.getElementById('make').value,
+                model: document.getElementById('model').value,
+                reason: document.getElementById('reason').value,
+                notes: document.querySelector('textarea[name="notes"]').value,
+            };
+
+            // Generate a unique timestamp as the key
+            const timestampKey = 'bootFormData-' + Date.now(); // Unique timestamp-based key
+
+            // Store form data in local storage with the unique timestamp key
+            localStorage.setItem(timestampKey, JSON.stringify(formData));
+
+            // Clear the form after submission if needed
+            document.getElementById('bootForm').reset();
+
+            // Optionally display a confirmation message to the user
+            alert('Form submitted successfully!');
+
+            // Prevent the page from redirecting
+            return false;
+        }
+
+        // Attach form submission handler to the form
+        document.getElementById('bootForm').addEventListener('submit', handleFormSubmission);
+    </script>
+</body>
+</html>
+<!--November 16th, 2023-->

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Titan Booting</title>
+    <meta name="description" content="car immobilization"/>
+    <meta name="author" content="Porter Cook" />
+    <link rel="stylesheet" href="styles/search.css">
+</head>  
+<body>
+    <div class="container">
+        <header class="header-grid">
+            <div class="logo-container">
+                <h1>Titan Booting</h1>
+            </div>
+            <nav class="top-right">
+                <a href="index.html" class="contact">New Boot</a>
+                <a href="boot-history.html" class="contact">Boot History</a>
+                <a href="#" class="contact">Search</a>
+            </nav>
+        </header>  
+        <main class="main-content">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Enter License Plate Number">
+                <button onclick="searchEntries()">Search</button>
+            </div>
+            <div id="searchResults"></div>
+        </main>                        
+        <footer>
+            <div class="footer-content">
+                <p>©2023 | Titan Booting | Porter Cook | WDD 130</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Function to search for entries containing the entered license plate
+        function searchEntries() {
+            const searchInput = document.getElementById('searchInput').value.toUpperCase();
+            const searchResultsContainer = document.getElementById('searchResults');
+            searchResultsContainer.innerHTML = ''; // Clear previous search results
+
+            for (let key in localStorage) {
+                if (key.startsWith('bootFormData-')) {
+                    const storedData = JSON.parse(localStorage.getItem(key));
+
+                    // Check if the license plate contains the entered search term
+                    if (storedData.licensePlate.toUpperCase().includes(searchInput)) {
+                        // Display the matching entry
+                        const entryDiv = document.createElement('div');
+                        entryDiv.innerHTML = `
+                            <strong>${key}</strong><br>
+                            License Plate: ${storedData.licensePlate}<br>
+                            Make: ${storedData.make}<br>
+                            Model: ${storedData.model}<br>
+                            Reason: ${storedData.reason}<br>
+                            Notes: ${storedData.notes}<br><br>
+                        `;
+                        searchResultsContainer.appendChild(entryDiv);
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
